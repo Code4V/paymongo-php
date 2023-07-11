@@ -5,7 +5,7 @@ namespace Paymongo\Exceptions;
 class BaseException extends \Exception
 {
     private $data;
-    protected $errors;
+    protected array $errors;
     
     public function __construct($data)
     {

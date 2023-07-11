@@ -7,7 +7,7 @@ class Link extends \Paymongo\Entities\BaseEntity
     public function __construct($apiResource)
     {
         $attributes = $apiResource->attributes;
-
+        
         $this->id = $apiResource->id;
         $this->amount = $attributes['amount'];
         $this->archived = $attributes['archived'];
@@ -24,6 +24,7 @@ class Link extends \Paymongo\Entities\BaseEntity
             $this->payments = [];
 
             foreach($attributes['payments'] as $payment) {
+                $payment = new \Paymongo\ApiResource($payment);
                 $this->payments[] = new \Paymongo\Entities\Payment($payment);
             }
         }

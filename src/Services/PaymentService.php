@@ -21,7 +21,7 @@ class PaymentService extends BaseService {
         }
 
         return new \Paymongo\Entities\Listing([
-            'has_more' => $apiResponse->has_more,
+            'has_more' => $apiResource->has_more ?? false,
             'data'     => $objects,
         ]);
     }
@@ -42,6 +42,6 @@ class PaymentService extends BaseService {
             'params' => $params
         ]);
 
-        return new \Paymongo\Entities\Payment($apiResource);
+        return new \Paymongo\Entities\Payment($apiResponse);
     }
 }

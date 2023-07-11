@@ -16,6 +16,9 @@ class PaymongoClient
     /** @var string PayMongo API current API version  */
     public $apiVersion = 'v1';
 
+    public $config;
+    public $serviceFactory;
+    
     public function __construct($apiKey = '')
     {
         $this->config = [

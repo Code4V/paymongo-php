@@ -6,6 +6,7 @@ class HttpClient
 {
     const DEFAULT_CONNECTTIMEOUT = 30;
     const DEFAULT_TIMEOUT = 30;
+    public $apiKey;
 
     public function __construct($apiKey = '')
     {
@@ -21,7 +22,6 @@ class HttpClient
         }
 
         $ch = curl_init($url);
-
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, self::DEFAULT_CONNECTTIMEOUT);
         curl_setopt($ch, CURLOPT_TIMEOUT, self::DEFAULT_TIMEOUT);
         curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -37,29 +37,29 @@ class HttpClient
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         
         if (in_array($opts['method'], ['DELETE', 'POST', 'PUT'])) {
-
+            
             if (isset($opts['params'])) {
                 $data = [
                     'data' => [
                         'attributes' => $opts['params']
-                    ]
-                ];
-                $dataString = json_encode($data);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                        ]
+                    ];
+                    $dataString = json_encode($data);
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+                }
+                
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $opts['method']);
+                curl_setopt($ch, CURLOPT_POST, 1);
             }
-            
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $opts['method']);
-            curl_setopt($ch, CURLOPT_POST, 1);
-        }
-
-        $body = curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $url = curl_getinfo($ch,  CURLINFO_EFFECTIVE_URL);
+        
+            $body = curl_exec($ch);
+            $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $url = curl_getinfo($ch,  CURLINFO_EFFECTIVE_URL);
 
         if ($code < 200 || $code >= 400) {
             $this->handleErrorResponse($body, $code, $url);
         }
-
+        
         curl_close($ch);
         
         $jsonBody = json_decode($body, true);

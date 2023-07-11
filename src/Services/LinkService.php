@@ -32,7 +32,7 @@ class LinkService extends BaseService {
             'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI . "/{$id}",
         ]);
 
-        return new \Paymongo\Entities\Link($apiResource);
+        return new \Paymongo\Entities\Link($apiResponse);
     }
 
     public function create($params) {
@@ -42,7 +42,7 @@ class LinkService extends BaseService {
             'params' => $params
         ]);
 
-        return new \Paymongo\Entities\Link($apiResource);
+        return new \Paymongo\Entities\Link($apiResponse);
     }
 
     public function archive($id) {
@@ -51,7 +51,7 @@ class LinkService extends BaseService {
             'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI . "/{$id}" . '/archive',
         ]);
 
-        return new \Paymongo\Entities\Link($apiResource);
+        return new \Paymongo\Entities\Link($apiResponse);
     }
     
     public function unarchive($id) {
@@ -60,6 +60,6 @@ class LinkService extends BaseService {
             'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI . "/{$id}" . '/unarchive',
         ]);
 
-        return new \Paymongo\Entities\Link($apiResource);
+        return new \Paymongo\Entities\Link($apiResponse);
     }
 }

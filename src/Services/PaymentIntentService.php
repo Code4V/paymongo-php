@@ -8,11 +8,11 @@ class PaymentIntentService extends \Paymongo\Services\BaseService {
     public function create($params) {
         $apiResponse = $this->httpClient->request([
             'method' => 'POST',
-            'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI,
+            'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}" . self::URI,
             'params' => $params
         ]);
 
-        return new \Paymongo\Entities\PaymentIntent($apiResource);
+        return new \Paymongo\Entities\PaymentIntent($apiResponse);
     }
 
     public function retrieve($id) {
@@ -21,7 +21,7 @@ class PaymentIntentService extends \Paymongo\Services\BaseService {
             'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI . "/{$id}",
         ]);
 
-        return new \Paymongo\Entities\PaymentIntent($apiResource);
+        return new \Paymongo\Entities\PaymentIntent($apiResponse);
     }
 
     public function capture($id, $params) {
@@ -31,7 +31,7 @@ class PaymentIntentService extends \Paymongo\Services\BaseService {
             'params' => $params
         ]);
 
-        return new \Paymongo\Entities\PaymentIntent($apiResource);
+        return new \Paymongo\Entities\PaymentIntent($apiResponse);
     }
 
     public function cancel($id) {
@@ -40,6 +40,16 @@ class PaymentIntentService extends \Paymongo\Services\BaseService {
             'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI . "/{$id}/cancel",
         ]);
 
-        return new \Paymongo\Entities\PaymentIntent($apiResource);
+        return new \Paymongo\Entities\PaymentIntent($apiResponse);
+    }
+
+    public function attach($id, $params) {
+        $apiResponse = $this->httpClient->request([
+            'method' => 'POST',
+            'url'    => "{$this->client->apiBaseUrl}/{$this->client->apiVersion}/" . self::URI . "/{$id}/attach",
+            'params' => $params
+        ]);
+
+        return new \Paymongo\Entities\PaymentIntent($apiResponse);
     }
 }
